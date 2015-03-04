@@ -1,0 +1,14 @@
+program p1041;
+var
+ n1,n2,p,q:double;a,i:longint;
+begin
+ readln(p,q);
+ for i:=1 to 10000000 do
+ begin
+  n1:=trunc(i*p/100)+1;
+  n2:=trunc(i*q/100);
+  if (i*q/100)=n2 then dec(n2);
+  if (n1<=n2)and(n1>0) then 
+  begin writeln(i);break; end;
+ end;
+end.

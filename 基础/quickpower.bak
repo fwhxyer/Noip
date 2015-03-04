@@ -1,0 +1,13 @@
+program qpowerprogram;
+var
+ a,b:longint;
+function power(a,b:longint):longint;
+var t:longint;
+begin
+ if b=0 then exit(1);
+ t:=sqr(power(a,b shr 1));
+end;
+begin
+ readln(a,b);
+ writeln(power(a,b));
+end.

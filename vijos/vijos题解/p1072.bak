@@ -1,0 +1,8 @@
+program p1072;
+var
+ l,v:real;
+begin
+ readln(l);
+ readln(v);
+ writeln((l/sqrt(3))/(v*cos(pi/6)));
+end.

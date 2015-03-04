@@ -1,0 +1,80 @@
+高精度乘法
+来自"NOCOW"
+跳转到: 导航, 搜索
+四位一计算： 
+
+var
+    he,t,f,w:longint;
+    l1,l2,i,j,temp,temp2,moder,sa,sb,n:integer;
+    s1,s2,str:string;
+    last,a,b,answer,answer2:array[1..1000] of longint;
+  begin
+    readln(s1);
+    readln(s2);
+    sa:=ord(s1[1])-48;
+    sb:=ord(s2[1])-48;
+    l1:=length(s1);
+    l2:=length(s2);
+    if (l2>l1) or ((l2=l1) and (sa<sb)) then
+      begin
+        temp:=l1;l1:=l2;l2:=temp;
+        str:=s1;s1:=s2;s2:=str;
+      end;
+    for i:=1 to l1 do answer[i]:=0;
+    for i:=1 to l2 do answer2[i]:=0;
+    for i:=l1 downto 1 do
+      a[i]:=ord(s1[l1+1-i])-48;
+    for i:=l2 downto 1 do
+      b[i]:=ord(s2[l2+1-i])-48;
+    temp:=1;
+    for i:=1 to l1 do
+      begin
+        moder:=i mod 4;
+        if moder=0 then moder:=4;
+        he:=1;
+        for j:=1 to moder-1 do
+          he:=he*10;
+        answer[temp]:=answer[temp]+a[i]*he;
+        if i mod 4=0 then
+          begin
+            temp:=temp+1;
+            he:=1;
+          end;
+      end;
+    temp2:=1;
+    for i:=1 to l2 do
+      begin
+        moder:=i mod 4;
+        if moder=0 then moder:=4;
+        he:=1;
+        for j:=1 to moder-1 do
+          he:=he*10;
+        answer2[temp2]:=answer2[temp2]+b[i]*he;
+        if i mod 4=0 then
+          begin
+            temp2:=temp2+1;
+            he:=1;
+          end;
+      end;
+    while answer[l1]=0 do l1:=l1-1;
+    while answer[l2]=0 do l2:=l2-1;
+    for i:=1 to l1 do
+      for j:=1 to l2 do
+        begin
+          t:=answer[i]*answer2[j];
+          w:=i+j-1;
+          last[w]:=last[w]+t;
+          last[w+1]:=last[w+1]+last[w] div 10000;
+          last[w]:=last[w] mod 10000;
+        end;
+    n:=l1+l2;
+    while (last[n]=0) and (n>1) do n:=n-1;
+   write(last[n]);
+   for i:=n-1 downto 1 do
+     begin
+       if last[i]<1000 then write(0);
+       if last[i]<100 then write(0);
+       if last[i]<10 then write(0);
+       write(last[i]);
+     end;
+  end.

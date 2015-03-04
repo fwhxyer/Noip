@@ -1,0 +1,37 @@
+program dijkstraprogram;
+const
+ n=1000;
+var
+ dist:array[1..10000]of longint;
+ cost:array[1..1000,1..1000]of longint;
+ mark:array[1..10000]of boolean;
+ i,j:longint;
+procedure dijkstra(k:longint);
+var
+ tmp,mj,min,i,j:longint;
+begin
+ for i:=1 to n do begin
+  dist[i]:=maxlongint;
+  mark[i]:=false;
+ end;dist[k]:=0;
+ for i:=1 to n-1 do begin
+  min:=maxlongint;
+  for j:=1 to n do
+   if (not mark[j]) and(dist[j]<min) then begin min:=dist[j];mj:=j; end;
+  mark[mj]:=true;
+  for j:=1 to n do
+   if (not mark[j]) and(cost[mj,j]>0) then begin
+    tmp:=cost[mj,j]+dist[mj];
+    if tmp<dist[j] then dist[j]:=tmp;
+   end;
+ end;
+end;
+begin
+ randomize;
+ for i:=1 to n do
+  for j:=1 to n do
+   if i<>j then  cost[i,j]:=random(9999935) else cost[i,j]:=0;
+ dijkstra(1);
+ for i:=1 to n do
+  writeln(dist[i]);
+end.

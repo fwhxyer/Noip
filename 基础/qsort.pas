@@ -1,0 +1,68 @@
+program qsortprogram;
+const
+ n=1000000;
+var
+ a:array[1..n]of int64;
+ i:longint;
+procedure qsort(s,t:longint);
+var
+ i,j,mid:longint;
+begin
+ i:=s;j:=t;mid:=a[{(i+j)shr 1}random(j-i+1)+i];
+ repeat
+  while a[i]<mid do inc(i);
+  while a[j]>mid do dec(j);
+  if (i<=j) then begin
+   if (a[i]<>a[j]) then
+   begin
+    a[i]:=a[i] xor a[j];
+    a[j]:=a[i] xor a[j];
+    a[i]:=a[i] xor a[j];
+   end;
+{   tmp:=a[i];
+   a[i]:=a[j];
+   a[j]:=tmp;}
+   inc(i);dec(j);
+  end;
+ until i>j;
+ if i<t then qsort(i,t);
+ if s<j then qsort(s,j);
+end;
+{   procedure qsort(l,r: longint);
+      var
+         i,j,x,y: longint;
+      begin
+         i:=l;
+         j:=r;
+         x:=a[(l+r) div 2];
+         repeat
+           while a[i]<x do
+            inc(i);
+           while x<a[j] do
+            dec(j);
+           if not(i>j) then
+             begin
+                y:=a[i];
+                a[i]:=a[j];
+                a[j]:=y;
+                inc(i);
+                j:=j-1;
+             end;
+         until i>j;
+         if l<j then
+           qsort(l,j);
+         if i<r then
+           qsort(i,r);
+      end;}
+
+begin
+assign(output,'c:qsort.txt');
+rewrite(output);
+ randomize;
+ for i:=1 to n do
+  a[i]:=random(2100000000);
+ qsort(1,n);
+ for i:=1 to n do
+  writeln(a[i]);
+close(output);
+end.

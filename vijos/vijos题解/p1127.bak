@@ -1,0 +1,10 @@
+program p1127;
+var
+ i,k:longint;
+ sn:real;
+begin
+ readln(k);
+ for i:=1 to maxlongint do
+  sn:=sn+1/i;
+
+end.

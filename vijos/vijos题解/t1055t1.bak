@@ -1,0 +1,25 @@
+program t1055t1;
+var
+ m,i,j:integer;ans:longint;
+ b1:array[1..1000]of boolean;
+ b2:array[2..2000]of boolean;
+ b3:array[-999..999]of boolean;
+procedure try1(n:longint);
+var i:integer;
+begin
+ if n=m+1 then inc(ans);
+ for i:=1 to m do
+  if (not b1[i]) and (i<>n) {and (not b2[i+n]) and (not b3[n-i])} then begin
+   b1[i]:=true;{b2[i+n]:=true;b3[n-i]:=true;}
+   try1(n+1);
+   b1[i]:=false;{b2[i+n]:=false;b3[n-i]:=false;}
+  end;
+end;
+begin
+ readln(m);ans:=0;
+ fillchar(b1,sizeof(b1),0);
+{ fillchar(b2,sizeof(b2),0);
+ fillchar(b3,sizeof(b3),0);b3[0]:=true;}
+ try1(1);
+ writeln(ans);
+end.

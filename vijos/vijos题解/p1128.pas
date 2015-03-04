@@ -1,0 +1,39 @@
+program p1128;
+var
+ n,r,i,j,ans:longint;
+ a,b:array[1..20]of longint;
+procedure try1;
+var
+ i,t:longint;
+ function sushu(a:longint):boolean;
+ var i:longint;
+ begin
+  for i:=2 to trunc(sqrt(a)) do
+   if a mod i=0 then exit(false);
+  exit(true);
+ end;
+begin
+ t:=0;
+ for i:=1 to r do
+  inc(t,b[a[i]]);
+ if sushu(t) then inc(ans);
+end;
+begin
+ readln(n,r);ans:=0;
+ for i:=1 to n do
+  read(b[i]);
+ for i:=1 to r do
+  a[i]:=i;
+ try1;
+ while true do
+ begin
+  i:=r;
+  while (i>0)and(a[i]=n-r+i) do dec(i);
+  if i=0 then break;
+  inc(a[i]);
+  for j:=i+1 to n do
+   a[j]:=a[j-1]+1;
+  try1;
+ end;
+ writeln(ans);
+end.

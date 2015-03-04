@@ -1,0 +1,40 @@
+program p1001;
+var
+ i,n,p,code,ed,max:longint;s:ansistring;
+ money,c,e,art:array[0..200]of longint;
+ named:array[1..200]of string;
+ ganb,xib:array[1..200]of boolean;
+begin
+ readln(n);
+ for i:=1 to n do
+ begin
+  readln(s);
+  p:=pos(' ',s);
+  named[i]:=copy(s,1,p-1);
+  delete(s,1,p);
+  p:=pos(' ',s);
+  val(copy(s,1,p-1),e[i],code);
+  delete(s,1,p);
+  p:=pos(' ',s);
+  val(copy(s,1,p-1),c[i],code);
+  delete(s,1,p);
+  if s[1]='Y' then ganb[i]:=true else ganb[i]:=false;
+  delete(s,1,2);
+  if s[i]='Y' then xib[i]:=true else xib[i]:=false;
+  delete(s,1,2);
+  val(s,art[i],code);
+  if (e[i]>80)and(art[i]>=1) then inc(money[i],8000);
+  if (e[i]>85)and(c[i]>80) then inc(money[i],4000);
+  if (e[i]>90) then inc(money[i],2000);
+  if (e[i]>85)and(xib[i]) then inc(money[i],1000);
+  if (c[i]>80)and(ganb[i]) then inc(money[i],850);
+  inc(money[0],money[i]);
+  if money[i]>max then begin
+   max:=money[i];
+   ed:=i;
+  end;
+ end;
+ writeln(named[ed]);
+ writeln(money[ed]);
+ writeln(money[0]);
+end.

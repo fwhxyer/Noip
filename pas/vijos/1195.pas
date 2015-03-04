@@ -1,0 +1,28 @@
+program p1195;
+var
+ n,i,j,ans:longint;
+ a,a1:array[-100000..100000]of longint;
+ b:array[0..100000]of longint;
+begin
+ readln(n);
+ ans:=0;
+ fillchar(a,sizeof(a),0);
+ fillchar(b,sizeof(b),0);
+ for i:=1 to n do
+  read(a[i]);
+ for i:=1 to n do
+  b[i]:=b[i-1]+a[i];
+ for i:=-n to n do
+  a[i]:=-1;
+ for i:=-n to n do
+  a1[i]:=-1;
+ for i:=1 to n do
+  b[i]:=2*b[i]-i;
+ for i:=0 to n do
+  if a[b[i]]=-1 then a[b[i]]:=i;
+ for i:=n downto 0 do
+  if a1[b[i]]=-1 then a1[b[i]]:=i;
+ for i:=-n to n do
+  if a1[i]-a[i]>ans then ans:=a1[i]-a[i];
+ writeln(ans);
+end.

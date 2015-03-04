@@ -1,0 +1,15 @@
+program p1113;
+var
+ i,k,max:integer;
+ c,a,b:array[1..7]of integer;
+begin
+ for i:=1 to 7 do
+ begin
+  read(a[i],b[i]);
+  c[i]:=a[i]+b[i];
+ end;
+ k:=0;max:=8;
+ for i:=1 to 7 do
+  if c[i]>max then begin max:=c[i];k:=i;
+ writeln(k);
+end.

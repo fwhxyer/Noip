@@ -1,0 +1,53 @@
+program hebingshizi;
+var
+ a:array[1..500]of longint;
+ i,j,k,n,ans:longint;
+ f:array[1..500,1..500]of longint;
+function max(a,b:longint):longint;
+begin
+ if a>b then max:=a else max:=b;
+end;
+function min(a,b:longint):longint;
+begin
+ if a<b then min:=a else min:=b;
+end;
+function c(x,b:longint):longint;
+var i:longint;
+begin
+ c:=0;
+ for i:=1 to b do
+  inc(c,a[x+i-1]);
+end;
+begin
+ readln(n);
+ for i:=1 to n do
+  read(a[i]);
+ for i:=1 to n-1 do
+  a[i+n]:=a[i];
+ for i:=1 to 2*n do
+  for j:=1 to 2*n do
+   f[i,j]:=maxlongint shr 1;
+ for i:=1 to 2*n-1 do
+  f[i,1]:=0;
+ for j:=1 to n do
+  for i:=1 to 2*n do
+   for k:=1 to j-1 do
+    f[i,j]:=min(f[i,j],f[i,k]+f[i+k,j-k]+c(i,j));
+ ans:=maxlongint;
+ for i:=1 to n do
+  if ans>f[i,n] then ans:=f[i,n];
+ writeln(ans);
+ for i:=1 to 2*n do
+  for j:=1 to 2*n do
+   f[i,j]:=0;
+ for i:=1 to 2*n-1 do
+  f[i,1]:=0;
+ for j:=1 to n do
+  for i:=1 to 2*n do
+   for k:=1 to j-1 do
+    f[i,j]:=max(f[i,j],f[i,k]+f[i+k,j-k]+c(i,j));
+ ans:=0;
+ for i:=1 to n do
+  if ans<f[i,n] then ans:=f[i,n];
+ writeln(ans);
+end.

@@ -1,0 +1,35 @@
+program p1078;
+var
+ n,m,i,j,now:longint;
+ b:array[1..500]of boolean;
+begin
+ readln(n);
+ readln(m);
+ now:=1;
+ for i:=1 to n do
+  b[i]:=true;
+ for i:=1 to m do
+ begin
+  j:=((i*i*i)mod 5)+1;
+  while (j>0)and(now<=n) do
+  begin
+   inc(now);if b[now] then dec(j);
+  end;
+  if now>n then
+  begin
+    now:=1;
+    j:=((i*i*i)mod 5)+1;
+    while (j>0)and(j<=n) do
+    begin
+     inc(now);if b[now] then dec(j);
+    end;
+    b[now]:=false;
+    inc(now);
+  end else
+  begin
+   b[now]:=false;
+   inc(now);
+  end;
+ end;
+ writeln(now-1);
+end.

@@ -1,0 +1,83 @@
+program p1024;
+function sortz(a:string;x,b:integer):string;
+procedure qsortz(s,t:integer);
+var
+ i,j:integer;
+ tmp,mid:char;
+begin
+ i:=s;j:=t;mid:=a[(i+j)shr 1];
+ repeat
+  while a[i]<mid do inc(i);
+  while a[j]>mid do dec(j);
+  if i<=j then begin
+   tmp:=a[i];
+   a[i]:=a[j];
+   a[j]:=tmp;
+   inc(i);dec(j);
+  end;
+ until i>j;
+ if s<j then qsortz(s,j);
+ if i<t then qsortz(i,t);
+end;
+begin
+ qsortz(x,b);
+ exit(a);
+end;
+function sortj(a:string;x,b:integer):string;
+procedure qsortj(s,t:integer);
+var
+ i,j:integer;
+ tmp,mid:char;
+begin
+ i:=s;j:=t;mid:=a[(i+j)shr 1];
+ repeat
+  while a[i]>mid do inc(i);
+  while a[j]<mid do dec(j);
+  if i<=j then begin
+   tmp:=a[i];
+   a[i]:=a[j];
+   a[j]:=tmp;
+   inc(i);dec(j);
+  end;
+ until i>j;
+ if s<j then qsortj(s,j);
+ if i<t then qsortj(i,t);
+end;
+begin
+ qsortj(x,b);
+ exit(a);
+end;
+const
+ tt:array[0..10]of int64=(1,10,100,1000,10000,100000,1000000,10000000,100000000,1000000000,10000000000);
+var
+ p,a,b,tmp,ne:int64;
+ code:longint;
+ n,n1,n2:string;
+ ha:array[1..100000]of int64;
+function found(a:int64):boolean;
+var i:longint;
+begin
+ for i:=1 to p do
+  if ha[i]=a then
+  begin tmp:=i;exit(true); end;
+ exit(false);
+end;
+begin
+while not eof do
+begin
+ readln(n);p:=0;a:=0;val(n,b,code);tmp:=0;ne:=0;
+ while (ne<11)and(b div tt[ne]<>0) do begin
+  inc(ne);
+ end;
+ while not found(b-a) do begin
+  inc(p);ha[p]:=b-a;
+  n1:=sortz(n,1,length(n));
+  n2:=sortj(n,1,length(n));
+  val(n1,a,code);val(n2,b,code);
+  str(b-a,n);
+  while length(n)<ne do insert('0',n,1);
+ end;
+ for a:=tmp to p-1 do
+ write(ha[a],' ');writeln(ha[p]);
+end;
+end.

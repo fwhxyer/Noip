@@ -1,0 +1,41 @@
+program p1222;
+var
+ n,i,j:longint;
+ cost:array[0..2000]of longint;
+ sigema:array[0..1,-13000..13000]of longint;
+function lol(a,b:longint):longint;
+begin
+ if a<b then lol:=a else lol:=b;
+end;
+begin
+ readln(n);
+ cost[0]:=0;
+ for i:=1 to n do
+ begin
+  readln(cost[i],cost[i+1]);
+  cost[i]:=cost[i]-cost[i+1];
+ end;
+ for i:=0 to 1 do
+  for j:=-13000 to 13000 do
+   sigema[i,j]:=maxint shr 1;
+ sigema[1,cost[1]]:=0;sigema[1,-cost[1]]:=1;
+ for i:=2 to n do
+ begin
+  for j:=-12000 to 12000 do
+   sigema[i and 1,j]:=lol(sigema[(i-1)and 1,j-cost[i]],sigema[(i-1)and 1,j+cost[i]]+1);
+ end;
+ for i:=0 to 12000 do
+ begin
+  if (sigema[n and 1,i]<>(maxint shr 1))and(sigema[n and 1,i]<sigema[n and 1,-i]) then
+  begin
+   writeln(sigema[n and 1,i]);
+   break;
+  end;
+  if (sigema[n and 1,-i]<>(maxint shr 1)) then
+  begin
+   writeln(sigema[n and 1,i]);
+   break;
+  end;
+ end;
+
+end.
